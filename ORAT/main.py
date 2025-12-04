@@ -72,6 +72,7 @@ def complete_dd(session, disdoc, log_func):
 
     try:
 
+        session.findById("wnd[0]").resizeWorkingPane(171, 39, False)
         session.findById("wnd[0]/tbar[0]/okcd").text = "zamiflag_update"
         session.findById("wnd[0]").sendVKey(0)
         session.findById("wnd[0]/usr/radP_CLEAR").select()
@@ -97,7 +98,6 @@ def complete_dd(session, disdoc, log_func):
         session.findById("wnd[0]").sendVKey(11)
         session.findById("wnd[0]").sendVKey(11)
         session.findById("wnd[0]").sendVKey(3)
-        session.findById("wnd[0]").sendVKey(3)
         log_func(f"DD# {disdoc} completed")
 
     except Exception as e:
@@ -109,6 +109,7 @@ def cpwo(session, wo, log_func):
 
     try:
 
+        session.findById("wnd[0]").resizeWorkingPane(171, 39, False)
         session.findById("wnd[0]/tbar[0]/okcd").text = "iw32"
         session.findById("wnd[0]").sendVKey(0)
         session.findById("wnd[0]/usr/ctxtCAUFVD-AUFNR").text = wo
@@ -127,11 +128,11 @@ def cpwo(session, wo, log_func):
         session.findById("wnd[0]/tbar[0]/btn[3]").press()
         session.findById("wnd[0]/tbar[1]/btn[36]").press()
         session.findById("wnd[1]/tbar[0]/btn[0]").press()
-        log_func(f"CPWO {wo} completed")
+        log_func(f"Work Order # {wo} completed")
 
     except Exception as e:
 
-        log_func(f"CPWO Error: {e}")
+        log_func(f"Error completing WO: {e}")
 
 
 # ======================= GUI =======================
@@ -143,6 +144,7 @@ class ORAT(tk.Tk):
 
         super().__init__()
         self.title("ORAT v0.2")
+        self.iconbitmap("C:\Github\ORAT\ORAT\ORAT\orat_logo.ico")
         self.geometry("880x740")
         self.configure(bg="#1e1e1e")
         self.session = None
