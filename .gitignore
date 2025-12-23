@@ -1,0 +1,8 @@
+*.toc
+*.pyc
+*.spec
+*.zip
+ORAT/build/ORAT/ORAT.pkg
+ORAT/build/ORAT/PYZ-00.pyz
+ORAT/build/ORAT/xref-ORAT.html
+ORAT/build/ORAT/warn-ORAT.txt
