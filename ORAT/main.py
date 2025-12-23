@@ -52,8 +52,8 @@ def rlo_batch(session, wo_numbers, log_func):
                 session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,6]").selected = True
                 session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,7]").selected = False
                 session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,6]").setFocus()
-                session.findById("wnd[0]/tbar[0]/btn[3]").press()
-                session.findById("wnd[0]/tbar[0]/btn[11]").press()
+                session.findById("wnd[0]").sendVKey(3)
+                session.findById("wnd[0]").sendVKey(11)
 
                 log_func(f"✓ {wo}")
 
@@ -62,6 +62,7 @@ def rlo_batch(session, wo_numbers, log_func):
                 log_func(f"✗ {wo}: {str(e)}")
 
         log_func(f"\nFinished {len(wo_numbers)} work order(s).")
+        session.findById("wnd[0]").sendVKey(3)
 
     except Exception as e:
 
@@ -125,9 +126,10 @@ def cpwo(session, wo, log_func):
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO").verticalScrollbar.position = 4
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO").verticalScrollbar.position = 5
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,10]").selected = True
-        session.findById("wnd[0]/tbar[0]/btn[3]").press()
+        session.findById("wnd[0]").sendVKey(3)
         session.findById("wnd[0]/tbar[1]/btn[36]").press()
         session.findById("wnd[1]/tbar[0]/btn[0]").press()
+        session.findById("wnd[0]").sendVKey(3)
         log_func(f"Work Order # {wo} completed")
 
     except Exception as e:
