@@ -1,4 +1,6 @@
 import tkinter as tk
+from pathlib import Path
+import sys
 from tkinter import ttk, scrolledtext, messagebox
 import win32com.client
 
@@ -35,8 +37,9 @@ def get_all_sap_sessions():
 def rlo_batch(session, wo_numbers, log_func):
 
     try:
-
+    #resize window to ensure accuracy of scripting actions
         session.findById("wnd[0]").resizeWorkingPane(171, 39, False)
+    #type IW32 into searchbar and press enter
         session.findById("wnd[0]/tbar[0]/okcd").text = "iw32"
         session.findById("wnd[0]").sendVKey(0)
 
@@ -45,13 +48,15 @@ def rlo_batch(session, wo_numbers, log_func):
             log_func(f"Processing {wo}...")
 
             try:
-
+        #enter WO number into IW32 and press enter
                 session.findById("wnd[0]/usr/ctxtCAUFVD-AUFNR").text = wo
                 session.findById("wnd[0]").sendVKey(0)
+        #click on the "User Status" field, check RLO, and uncheck RCD
                 session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/btnBUTTON_STATUS").press()
                 session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,6]").selected = True
                 session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,7]").selected = False
                 session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,6]").setFocus()
+        #hotkeys for back and save
                 session.findById("wnd[0]").sendVKey(3)
                 session.findById("wnd[0]").sendVKey(11)
 
@@ -62,6 +67,7 @@ def rlo_batch(session, wo_numbers, log_func):
                 log_func(f"✗ {wo}: {str(e)}")
 
         log_func(f"\nFinished {len(wo_numbers)} work order(s).")
+    #back button to return to home screen
         session.findById("wnd[0]").sendVKey(3)
 
     except Exception as e:
@@ -72,14 +78,17 @@ def rlo_batch(session, wo_numbers, log_func):
 def complete_dd(session, disdoc, log_func):
 
     try:
-
+    #resize window to ensure accuracy of scripting actions
         session.findById("wnd[0]").resizeWorkingPane(171, 39, False)
+    #use searchbar to open ZAMIFLAG_UPDATE
         session.findById("wnd[0]/tbar[0]/okcd").text = "zamiflag_update"
         session.findById("wnd[0]").sendVKey(0)
+    #select option to clear AMI flag and execute
         session.findById("wnd[0]/usr/radP_CLEAR").select()
         session.findById("wnd[0]/usr/ctxtS_DOC-LOW").text = disdoc
         session.findById("wnd[0]/tbar[1]/btn[8]").press()
         session.findById("wnd[1]/usr/btnBUTTON_1").press()
+    #use back button twice to return to home screen
         session.findById("wnd[0]").sendVKey(3)
         session.findById("wnd[0]").sendVKey(3)
         log_func("AMI flag cleared")
@@ -88,16 +97,18 @@ def complete_dd(session, disdoc, log_func):
         pass
 
     try:
-
+    #use searchbar to open EC86
         session.findById("wnd[0]/tbar[0]/okcd").text = "ec86"
         session.findById("wnd[0]").sendVKey(0)
         session.findById("wnd[0]/usr/ctxtEDISCD-DISCNO").text = disdoc
+    #Key shortcuts to enter disconnection, enter reconnetion, then save twice
         session.findById("wnd[0]").sendVKey(0)
         session.findById("wnd[0]").sendVKey(6)
         session.findById("wnd[0]").sendVKey(11)
         session.findById("wnd[0]").sendVKey(8)
         session.findById("wnd[0]").sendVKey(11)
         session.findById("wnd[0]").sendVKey(11)
+    #back button to return to home screen
         session.findById("wnd[0]").sendVKey(3)
         log_func(f"DD# {disdoc} completed")
 
@@ -109,12 +120,14 @@ def complete_dd(session, disdoc, log_func):
 def cpwo(session, wo, log_func):
 
     try:
-
+    #resize window to ensure accuracy of scripting actions
         session.findById("wnd[0]").resizeWorkingPane(171, 39, False)
         session.findById("wnd[0]/tbar[0]/okcd").text = "iw32"
         session.findById("wnd[0]").sendVKey(0)
+    #enter WO number into IW32 and press enter
         session.findById("wnd[0]/usr/ctxtCAUFVD-AUFNR").text = wo
         session.findById("wnd[0]").sendVKey(0)
+    #select the "User Status" box, then check CP RLO AUCP and uncheck RCD
         session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/btnBUTTON_STATUS").press()
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_E/radJ_STMAINT-ANWS[0,8]").selected = True
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,6]").selected = True
@@ -127,6 +140,7 @@ def cpwo(session, wo, log_func):
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO").verticalScrollbar.position = 5
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,10]").selected = True
         session.findById("wnd[0]").sendVKey(3)
+    #TECO, save, and back to return to home screen
         session.findById("wnd[0]/tbar[1]/btn[36]").press()
         session.findById("wnd[1]/tbar[0]/btn[0]").press()
         session.findById("wnd[0]").sendVKey(3)
@@ -142,16 +156,18 @@ def cpwo(session, wo, log_func):
 
 class ORAT(tk.Tk):
 
+    
     def __init__(self):
-
         super().__init__()
-        self.title("ORAT v0.2")
-        self.iconbitmap("C:\Github\ORAT\ORAT\ORAT\orat_logo.ico")
+        self.title("ORAT v0.4")
         self.geometry("880x740")
         self.configure(bg="#1e1e1e")
+        base_dir = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
+        self.iconbitmap(str(base_dir / "orat_logo.ico"))
         self.session = None
         self.all_sessions = []
         self.create_widgets()
+
 
     def log(self, msg):
 

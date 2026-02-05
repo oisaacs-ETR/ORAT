@@ -8,7 +8,14 @@ rmdir /s /q dist
 del /q ORAT.spec
 
 :: Build with PyInstaller and custom icon
-pyinstaller --noconsole --onefile --name ORAT --icon=orat_logo.ico main.py
+pyinstaller ^
+  --noconsole ^
+  --onefile ^
+  --name ORAT ^
+  --icon=orat_logo.ico ^
+  --add-data "orat_logo.ico;." ^
+  main.py
+
 
 echo Done! Find your executable in the dist\ folder as ORAT.exe
 pause
