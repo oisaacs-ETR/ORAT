@@ -44,9 +44,10 @@ def rlo_batch(session, wo_numbers, log_func):
         session.findById("wnd[0]").sendVKey(0)
 
         
-    #LIMIT: ensure no more than 100 work orders are processed
-        if len(wo_numbers) > 100:
-            raise Exception(f"Too many work orders: {len(wo_numbers)}. The limit is 100.")
+    #LIMIT: ensure no more than the limit set by variable "limit" of work orders are processed
+        limit = 100
+        if len(wo_numbers) > limit:
+            raise Exception(f"Too many work orders: {len(wo_numbers)}. The limit is {limit}.")
 
 
         for wo in wo_numbers:
