@@ -134,7 +134,7 @@ def cpwo(session, wo, log_func):
     #enter WO number into IW32 and press enter
         session.findById("wnd[0]/usr/ctxtCAUFVD-AUFNR").text = wo
         session.findById("wnd[0]").sendVKey(0)
-    #select the "User Status" box, then check CP RLO AUCP and uncheck RCD
+    #select the "User Status" box, then check CP, RLO, AUCP, and uncheck P and RCD
         session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/btnBUTTON_STATUS").press()
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_E/radJ_STMAINT-ANWS[0,8]").selected = True
         session.findById("wnd[0]/usr/tabsTABSTRIP_0300/tabpANWS/ssubSUBSCREEN:SAPLBSVA:0302/tblSAPLBSVATC_EO/chkJ_STMAINT-ANWSO[0,6]").selected = True
