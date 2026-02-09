@@ -43,6 +43,12 @@ def rlo_batch(session, wo_numbers, log_func):
         session.findById("wnd[0]/tbar[0]/okcd").text = "iw32"
         session.findById("wnd[0]").sendVKey(0)
 
+        
+    #LIMIT: ensure no more than 100 work orders are processed
+        if len(wo_numbers) > 100:
+            raise Exception(f"Too many work orders: {len(wo_numbers)}. The limit is 100.")
+
+
         for wo in wo_numbers:
 
             log_func(f"Processing {wo}...")
