@@ -165,7 +165,7 @@ class ORAT(tk.Tk):
     
     def __init__(self):
         super().__init__()
-        self.title("ORAT v0.4")
+        self.title("ORAT v0.5")
         self.geometry("880x740")
         self.configure(bg="#1e1e1e")
         base_dir = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
