@@ -117,6 +117,7 @@ def complete_dd(session, disdoc, log_func):
     #back button to return to home screen
         session.findById("wnd[0]").sendVKey(3)
         log_func(f"DD# {disdoc} completed")
+        log_func(f"Please ensure that all work orders associated with DD# {disdoc} are technically completed")
 
     except Exception as e:
 
