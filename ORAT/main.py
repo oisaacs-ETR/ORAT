@@ -44,7 +44,7 @@ def rlo_batch(session, wo_numbers, log_func):
         session.findById("wnd[0]").sendVKey(0)
 
         
-    #LIMIT: ensure no more than the limit set by variable "limit" of work orders are processed
+    #LIMIT: ensure no more than the limit set by variable "limit" # of work orders are processed
         limit = 100
         if len(wo_numbers) > limit:
             raise Exception(f"Too many work orders: {len(wo_numbers)}. The limit is {limit}.")
@@ -125,7 +125,7 @@ def complete_dd(session, disdoc, log_func):
         log_func(f"EC86 error: {e}")
 
 
-def cpwo(session, wo, log_func):
+def complete_wo(session, wo, log_func):
 
     try:
     #resize window to ensure accuracy of scripting actions
@@ -375,7 +375,7 @@ class ORAT(tk.Tk):
 
         self.log(f"Running CPWO on {wo}...")
 
-        cpwo(self.session, wo, self.log)
+        complete_wo(self.session, wo, self.log)
 
 
 if __name__ == "__main__":
