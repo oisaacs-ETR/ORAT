@@ -67,7 +67,7 @@ def rlo_batch(session, wo_numbers, log_func):
                 session.findById("wnd[0]").sendVKey(3)
                 session.findById("wnd[0]").sendVKey(11)
 
-                log_func(f"✓ {wo}")
+                log_func(f"✓ {wo} status successfully changed to RLO")
 
             except Exception as e:
 
@@ -153,6 +153,7 @@ def complete_wo(session, wo, log_func):
         session.findById("wnd[1]/tbar[0]/btn[0]").press()
         session.findById("wnd[0]").sendVKey(3)
         log_func(f"Work Order # {wo} completed")
+        log_func(f"Please ensure that the DD for this WO is completed to 99 status")
 
     except Exception as e:
 
@@ -167,7 +168,7 @@ class ORAT(tk.Tk):
     
     def __init__(self):
         super().__init__()
-        self.title("ORAT v0.5")
+        self.title("ORAT v1.0")
         self.geometry("880x740")
         self.configure(bg="#1e1e1e")
         base_dir = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
